@@ -8,10 +8,8 @@ const schema = Joi.object({
     .valid("development", "production", "test", "provision")
     .default("development"),
   PORT: Joi.number().required(),
-  JWT_SECRET: Joi.string().required(),
-  JWT_EXPIRATION_TIME: Joi.string().required(),
-  DB_URL: Joi.string().required().description("Database connection URL"),
-  DB_DIALECT: Joi.string().required().description("Database type"),
+  // DB_URL: Joi.string().required().description("Database connection URL"),
+  // DB_DIALECT: Joi.string().required().description("Database type"),
 })
   .unknown()
   .required();
