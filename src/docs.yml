@@ -1,8 +1,43 @@
 paths:
-  /auth/sign-in:
+  /db-name:
+    get:
+      tags:
+        - Explorer
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Status and message and data
+
+  /tables:
+    get:
+      tags:
+        - Explorer
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Status and message and data
+
+  /table-columns:
+    get:
+      tags:
+        - Explorer
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: table
+          required: true
+          type: string
+      responses:
+        200:
+          description: Status and message and data
+
+  /get-records:
     post:
       tags:
-        - Authentication
+        - Explorer
       produces:
         - application/json
       parameters:
@@ -10,15 +45,15 @@ paths:
           name: request
           required: true
           schema:
-            $ref: "#/definitions/signIn"
+            $ref: "#/definitions/getRecords"
       responses:
         200:
           description: Status and message and data
 
-  /auth/sign-up:
+  /records:
     post:
       tags:
-        - Authentication
+        - Explorer
       produces:
         - application/json
       parameters:
@@ -26,76 +61,14 @@ paths:
           name: request
           required: true
           schema:
-            $ref: "#/definitions/signUp"
+            $ref: "#/definitions/createRecords"
       responses:
         200:
           description: Status and message and data
 
-  /auth/verify:
-    get:
-      tags:
-        - Authentication
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: token
-          type: string
-          required: true
-      responses:
-        200:
-          description: Status and message and data
-
-  /auth/resend-verification:
-    get:
-      tags:
-        - Authentication
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: email
-          type: string
-          required: true
-      responses:
-        200:
-          description: Status and message and data
-
-  /auth/initiate-reset:
-    post:
-      tags:
-        - Authentication
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: request
-          required: true
-          schema:
-            $ref: "#/definitions/initiateReset"
-      responses:
-        200:
-          description: Status and message and data
-
-  /auth/verify-reset:
-    get:
-      tags:
-        - Authentication
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: token
-          reqired: true
-          type: string
-      responses:
-        200:
-          description: Status and message and data
-
-  /auth/reset-password:
     put:
       tags:
-        - Authentication
+        - Explorer
       produces:
         - application/json
       parameters:
@@ -103,59 +76,64 @@ paths:
           name: request
           required: true
           schema:
-            $ref: "#/definitions/resetPassword"
+            $ref: "#/definitions/updateRecords"
+      responses:
+        200:
+          description: Status and message and data
+
+    delete:
+      tags:
+        - Explorer
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/deleteRecords"
       responses:
         200:
           description: Status and message and data
 
 definitions:
-  signIn:
-    type: object
+  getRecords:
     properties:
-      user:
+      table:
         type: string
         required: true
-      password:
-        type: string
+      model:
         required: true
-  signUp:
-    type: object
+        type: object
+      where:
+        required: true
+        type: object
+  createRecords:
     properties:
-      firstname:
+      table:
         type: string
         required: true
-      lastname:
-        type: string
+      records:
+        type: array
         required: true
-      username:
-        type: string
-        required: true
-      email:
-        type: string
-        required: true
-      role:
-        type: string
-        required: true
-      country:
-        type: string
-        required: true
-      preferredLanguage:
-        type: string
-        required: true
-      password:
-        type: string
-        required: true
-  initiateReset:
-    type: object
+        items:
+          type: object
+  updateRecords:
     properties:
-      email:
+      table:
         type: string
         required: true
-  resetPassword:
-    type: object
+      where:
+        type: object
+        required: true
+      values:
+        type: object
+        required: true
+  deleteRecords:
     properties:
-      token:
+      table:
         type: string
         required: true
-      password:
-        type: string
+      where:
+        type: object
+        required: true

@@ -61,6 +61,7 @@
     "short-uuid": "^4.1.0",
     "sib-api-v3-sdk": "^8.2.1",
     "slack-notify": "^0.1.7",
+    "sqlite3": "^5.0.2",
     "strict-transport-security": "^0.3.0",
     "swagger-jsdoc": "^6.0.2",
     "swagger-ui-express": "^4.1.6",

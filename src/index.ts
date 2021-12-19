@@ -10,7 +10,7 @@ import routes from "./routes";
 config();
 const app = express();
 const port: number = env.port;
-// db.authenticate(db.db);
+db.authenticate(db.db);
 
 app.use(formdata.parse());
 app.use(express.json({ limit: "100mb", type: "application/json" }));
@@ -22,7 +22,7 @@ app.use("/bull-board", bullBoard.adapter.getRouter());
 
 security.lock(app);
 
-app.use("", routes);
+app.use("/api", routes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   return response(
