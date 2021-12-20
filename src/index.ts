@@ -3,14 +3,14 @@ import { config } from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import formdata from "express-form-data";
 import swaggerUi from "swagger-ui-express";
-import { bullBoard, db, env, security, swagger } from "./configs";
+import { db, env, security, swagger } from "./configs";
 import { response } from "./helpers";
 import routes from "./routes";
 
 config();
 const app = express();
 const port: number = env.port;
-db.authenticate(db.db);
+db.authenticate(env.dbURL);
 
 app.use(formdata.parse());
 app.use(express.json({ limit: "100mb", type: "application/json" }));
@@ -18,7 +18,6 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(cors());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger.config));
-app.use("/bull-board", bullBoard.adapter.getRouter());
 
 security.lock(app);
 
