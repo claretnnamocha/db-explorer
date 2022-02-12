@@ -1,42 +1,37 @@
 import cors from "cors";
 import { config } from "dotenv";
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import formdata from "express-form-data";
-import swaggerUi from "swagger-ui-express";
-import { db, env, security, swagger } from "./configs";
+import { db } from "./configs";
 import { response } from "./helpers";
 import routes from "./routes";
+import swaggerUi from "swagger-ui-express";
+import { security, swagger } from "./configs";
 
-config();
-const app = express();
-const port: number = env.port;
-db.authenticate({ dbURL: "sqlite://db.db" });
+export default ({ dbURL }) => {
+  config();
+  db.authenticate({ dbURL });
+  const router = Router();
 
-app.use(formdata.parse());
-app.use(express.json({ limit: "100mb", type: "application/json" }));
-app.use(express.urlencoded({ limit: "100mb", extended: true }));
-app.use(cors());
+  router.use(formdata.parse());
+  router.use(express.json({ limit: "100mb", type: "application/json" }));
+  router.use(express.urlencoded({ limit: "100mb", extended: true }));
+  router.use(cors());
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger.config));
+  routes.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger.config));
 
-security.lock(app);
+  security.lock(router);
 
-app.use("/api", routes);
+  router.use("/api", routes);
+  // todo handle front end
 
-// todo handle front end
-
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  return response(
-    res,
-    { status: false, message: `Internal server error: ${err.message}` },
-    500
-  );
-});
-
-if (require.main) {
-  app.listen(port, () => {
-    console.log(`Backend is running on http://localhost:${port} (${env.env})`);
+  router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    return response(
+      res,
+      { status: false, message: `Internal server error: ${err.message}` },
+      500
+    );
   });
-}
 
-export default app;
+  return router;
+};

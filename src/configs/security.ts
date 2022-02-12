@@ -1,23 +1,22 @@
 import csp from "content-security-policy";
-import { Express } from "express";
+import { Router } from "express";
 import PP from "permissions-policy";
 import RP from "referrer-policy";
 import sts from "strict-transport-security";
 import XFP from "x-frame-options";
-import { env } from "../configs";
 
-export const lock = (app: Express) => {
+export const lock = (router: Router) => {
   const STS = sts.getSTS({
     "max-age": { days: 365 },
     includeSubDomains: true,
     preload: true,
   });
-  app.use(STS);
+  router.use(STS);
   const CSP = csp.getCSP(csp.STARTER_OPTIONS);
-  app.use(CSP);
-  app.use(XFP());
-  app.use(RP());
-  app.use(
+  router.use(CSP);
+  router.use(XFP());
+  router.use(RP());
+  router.use(
     PP({
       features: {
         accelerometer: ["none"],
@@ -67,7 +66,7 @@ export const lock = (app: Express) => {
       },
     })
   );
-  app.use((_, res, next) => {
+  router.use((_, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
     next();
   });

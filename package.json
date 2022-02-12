@@ -5,8 +5,8 @@
   "description": "Nodejs/Express library that allows you manage your sql databases",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon --exec ts-node src/index.ts"
+    "start": "ts-node src/server.ts",
+    "dev": "nodemon --exec ts-node src/server.ts"
   },
   "keywords": [],
   "author": "Claret Nnamocha <devclareo@gmail.com>",
