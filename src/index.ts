@@ -1,5 +1,4 @@
 import cors from "cors";
-import { config } from "dotenv";
 import express, { NextFunction, Request, Response, Router } from "express";
 import formdata from "express-form-data";
 import { db, security } from "./configs";
@@ -7,7 +6,6 @@ import { response } from "./helpers";
 import routes from "./routes";
 
 export default ({ dbURL }) => {
-  config();
   db.authenticate({ dbURL });
   const router = Router();
 
