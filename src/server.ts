@@ -7,7 +7,7 @@ config();
 const app = express();
 const port: number = env.port;
 
-app.use("", explorer({ dbURL: "sqlite://db.db" }));
+app.use("/explorer", explorer({ dbURL: "sqlite://db.db" }));
 
 if (require.main) {
   app.listen(port, () => {
