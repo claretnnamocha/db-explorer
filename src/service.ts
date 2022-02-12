@@ -1,5 +1,4 @@
 import { db } from "./configs/db";
-import { ModelType, Model } from "sequelize";
 
 export const getDatabaseName = async (params) => {
   try {
