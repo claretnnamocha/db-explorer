@@ -16,5 +16,3 @@ if (require.main) {
     );
   });
 }
-
-export default app;
