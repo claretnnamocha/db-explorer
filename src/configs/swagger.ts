@@ -1,19 +1,20 @@
+import fs from "fs";
 import swaggerJsDoc, { Options } from "swagger-jsdoc";
-import { port } from "./env";
+import { displayName, version, description } from "../../package.json";
+import { env, port } from "./env";
 
 const swagger: Options = {
   swaggerDefinition: {
     info: {
-      version: "1.0.0",
-      description:
-        "Database Explorer backend documention. Built with ❤️ by @claretnnamocha",
-      title: "Database Explorer API",
+      version,
+      description,
+      title: `${displayName} (${env})`,
       contact: { name: "Claret Nnamocha", email: "devclareo@gmail.com" },
       servers: [{ url: `http://localhost:${port}` }],
     },
     basePath: "/api",
   },
-  apis: ["./src/docs.yml"],
+  apis: ["./src/*.yml"],
 };
 
 const config = swaggerJsDoc(swagger);

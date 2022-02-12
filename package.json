@@ -1,7 +1,8 @@
 {
-  "name": "backend",
+  "name": "db-explorer",
+  "displayName": "DB Explorer",
   "version": "1.0.0",
-  "description": "Backend Template",
+  "description": "Nodejs/Express library that allows you manage your sql databases",
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
