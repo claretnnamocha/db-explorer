@@ -1,6 +1,6 @@
 import { db } from "./configs/db";
 
-export const getDatabaseName = async () => {
+export const getDatabaseName = async (params) => {
   try {
     const data = db.getDatabaseName() || "DB";
 
@@ -14,7 +14,7 @@ export const getDatabaseName = async () => {
   }
 };
 
-export const listTables = async () => {
+export const listTables = async (params) => {
   try {
     const data = await db.getQueryInterface().showAllTables();
 

@@ -10,7 +10,7 @@ import routes from "./routes";
 config();
 const app = express();
 const port: number = env.port;
-db.authenticate(env.dbURL);
+db.authenticate({ dbURL: "sqlite://db.db" });
 
 app.use(formdata.parse());
 app.use(express.json({ limit: "100mb", type: "application/json" }));
@@ -22,6 +22,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger.config));
 security.lock(app);
 
 app.use("/api", routes);
+
+// todo handle front end
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   return response(

@@ -7,14 +7,6 @@ import XFP from "x-frame-options";
 import { env } from "../configs";
 
 export const lock = (app: Express) => {
-  if (env.env !== "development") {
-    app.enable("trust proxy");
-    app.use((req, res, next) => {
-      req.secure
-        ? next()
-        : res.redirect("https://" + req.headers.host + req.url);
-    });
-  }
   const STS = sts.getSTS({
     "max-age": { days: 365 },
     includeSubDomains: true,
@@ -75,7 +67,7 @@ export const lock = (app: Express) => {
       },
     })
   );
-  app.use((req, res, next) => {
+  app.use((_, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
     next();
   });

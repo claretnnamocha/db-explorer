@@ -1,43 +1,43 @@
 import { Response, Router } from "express";
-import * as controller from "./controller";
 import { response } from "./helpers";
-import { validate } from "./middlewares";
+import { controller, validate } from "./middlewares";
+import * as db from "./service";
 import * as validator from "./validator";
 
 const routes = Router();
 
-routes.get("/db-name", controller.getDatabaseName);
+routes.get("/db-name", controller(db.getDatabaseName));
 
-routes.get("/tables", controller.listTables);
+routes.get("/tables", controller(db.listTables));
 
 routes.get(
   "/table-columns",
   validate(validator.listTableColumns),
-  controller.listTableColumns
+  controller(db.listTableColumns)
 );
 
 routes.post(
   "/get-records",
   validate(validator.readRecords),
-  controller.readRecords
+  controller(db.readRecords)
 );
 
 routes.post(
   "/records",
   validate(validator.createRecords),
-  controller.createRecords
+  controller(db.createRecords)
 );
 
 routes.put(
   "/records",
   validate(validator.updateRecords),
-  controller.updateRecords
+  controller(db.updateRecords)
 );
 
 routes.delete(
   "/records",
   validate(validator.deleteRecords),
-  controller.deleteRecords
+  controller(db.deleteRecords)
 );
 
 routes.use((_, res: Response) => {

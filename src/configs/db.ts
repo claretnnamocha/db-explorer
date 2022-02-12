@@ -1,14 +1,15 @@
 import { Sequelize } from "sequelize";
 
-export let db;
+export let db: Sequelize;
 
-export const authenticate = async (dbURL: string) => {
+export const authenticate = async ({ dbURL, secure = false }) => {
   db = new Sequelize(dbURL, {
-    dialectOptions: dbURL.includes("localhost")
+    dialectOptions: secure
       ? null
       : { ssl: { require: true, rejectUnauthorized: false } },
     logging: false,
   });
+
   await db.authenticate();
 
   if (db.getDialect() !== "sqlite" && !db.getDatabaseName()) {
