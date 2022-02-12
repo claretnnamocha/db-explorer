@@ -12,7 +12,6 @@ export const createRecords = {
 export const readRecords = {
   table: Joi.string().required(),
   where: Joi.object().default({}),
-  model: Joi.object().default(null),
 };
 
 export const updateRecords = {

@@ -1,4 +1,5 @@
 import { db } from "./configs/db";
+import { ModelType, Model } from "sequelize";
 
 export const getDatabaseName = async (params) => {
   try {
@@ -80,8 +81,10 @@ export const createRecords = async ({ table, records }) => {
   }
 };
 
-export const readRecords = async ({ table, where = {}, model = null }) => {
+export const readRecords = async ({ table, where = {} }) => {
   try {
+    const model = db.define(table, {}, { tableName: table });
+
     const data = await db.getQueryInterface().select(model, table, where);
     return { status: true, message: `${table} Record(s)`, data };
   } catch (error) {

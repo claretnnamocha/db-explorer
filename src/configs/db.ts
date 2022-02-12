@@ -4,7 +4,7 @@ export let db: Sequelize;
 
 export const authenticate = async ({ dbURL, secure = false }) => {
   db = new Sequelize(dbURL, {
-    dialectOptions: secure
+    dialectOptions: !secure
       ? null
       : { ssl: { require: true, rejectUnauthorized: false } },
     logging: false,
