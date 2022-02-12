@@ -1,6 +1,7 @@
 paths:
   /db-name:
     get:
+      summary: Get DB name
       tags:
         - Explorer
       produces:
@@ -11,6 +12,7 @@ paths:
 
   /tables:
     get:
+      summary: Get DB tables
       tags:
         - Explorer
       produces:
@@ -21,6 +23,7 @@ paths:
 
   /table-columns:
     get:
+      summary: Get Table colunms
       tags:
         - Explorer
       produces:
@@ -36,6 +39,7 @@ paths:
 
   /get-records:
     post:
+      summary: Read Table records
       tags:
         - Explorer
       produces:
@@ -52,6 +56,7 @@ paths:
 
   /records:
     post:
+      summary: Create Table records
       tags:
         - Explorer
       produces:
@@ -67,6 +72,7 @@ paths:
           description: Status and message and data
 
     put:
+      summary: Update Table records
       tags:
         - Explorer
       produces:
@@ -82,6 +88,7 @@ paths:
           description: Status and message and data
 
     delete:
+      summary: Delete Table records
       tags:
         - Explorer
       produces:
@@ -102,9 +109,6 @@ definitions:
       table:
         type: string
         required: true
-      model:
-        required: true
-        type: object
       where:
         required: true
         type: object
